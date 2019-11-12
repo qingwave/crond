@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cron-demo
+  labels:
+    app: cron-demo
+spec:
+  selector:
+    matchLabels:
+      app: cron-demo
+  template:
+    metadata:
+      labels:
+        app: cron-demo
+    spec:
+      containers:
+        - name: crond
+          image: qingwave/crond:latest
+          imagePullPolicy: IfNotPresent
+          env:
+          # multi schedule can separate by '\n'
+            - name: CRON_SCHEDULE
+              value: "0 3 * * * ls"
